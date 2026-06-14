@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="WHIRL: Intervention-Aware World Models for Real-World Dexterous Reinforcement Learning.">
+    <title>WHIRL | Intervention-Aware World Models</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top">WHIRL</a>
+      <nav aria-label="Project sections">
+        <a href="#method">Method</a>
+        <a href="#results">Results</a>
+        <a href="#videos">Videos</a>
+        <a href="#citation">Citation</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="venue">CoRL 2026 submission</p>
+          <h1>How to Learn from What a Human Would Avoid?</h1>
+          <p class="subtitle">
+            WHIRL turns human takeovers into predictive intervention signals for
+            real-world residual RL with a 16-DoF dexterous hand.
+          </p>
+          <div class="actions" aria-label="Project links">
+            <a class="button primary" href="assets/paper/whirl.pdf">Paper PDF</a>
+            <a class="button" href="#videos">Videos</a>
+            <a class="button disabled" href="#" aria-disabled="true">arXiv coming soon</a>
+            <a class="button disabled" href="#" aria-disabled="true">Code coming soon</a>
+          </div>
+        </div>
+        <figure class="hero-media">
+          <img src="assets/images/teaser.png" alt="WHIRL teaser showing intervention-aware world model and real robot tasks">
+        </figure>
+      </section>
+
+      <section class="summary">
+        <div>
+          <span class="metric">4-head WM</span>
+          <p>Dynamics, reward, and termination support the critic; an intervention head shapes the actor.</p>
+        </div>
+        <div>
+          <span class="metric">5 tasks</span>
+          <p>Pick Cube, Pick LEGO, Pick &amp; Place, Pull Drawer, and a long-horizon drawer-place-close task.</p>
+        </div>
+        <div>
+          <span class="metric">Real robot</span>
+          <p>Franka FR3 arm, 16-DoF LEAP Hand, dual RGB cameras, Manus glove, SpaceMouse, and pedal takeover.</p>
+        </div>
+      </section>
+
+      <section id="abstract" class="section narrow">
+        <h2>Abstract</h2>
+        <p>
+          Multi-fingered dexterous manipulation remains difficult for online RL
+          because exploratory failures are expensive on hardware. Human-in-the-loop
+          RL can prevent catastrophic failures, but existing systems often treat
+          takeovers as one-step corrections. WHIRL instead learns from what the
+          human would avoid: each pedal intervention supervises an
+          intervention-aware world model whose takeover-probability head predicts
+          states likely to require help, then shapes the residual actor away from
+          those regions.
+        </p>
+      </section>
+
+      <section id="method" class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Method</p>
+          <h2>Takeovers become predictive risk</h2>
+        </div>
+        <figure class="figure-panel">
+          <img src="assets/images/overview.png" alt="WHIRL system overview">
+          <figcaption>
+            WHIRL combines mid-rollout HIL teleoperation, residual RL on top of a
+            behavior prior, and an intervention-aware world model.
+          </figcaption>
+        </figure>
+        <div class="method-grid">
+          <article>
+            <h3>HIL labels</h3>
+            <p>
+              A foot pedal switches between autonomous execution and human
+              teleoperation. The pedal state labels each transition with whether
+              the operator took over.
+            </p>
+          </article>
+          <article>
+            <h3>Critic path</h3>
+            <p>
+              Dynamics, reward, and termination heads produce a short-horizon
+              model-based target, gated by ensemble uncertainty before it enters
+              the critic loss.
+            </p>
+          </article>
+          <article>
+            <h3>Actor path</h3>
+            <p>
+              The intervention head predicts future takeover probability and
+              shapes the actor toward states that are less likely to require
+              human control.
+            </p>
+          </article>
+        </div>
+        <figure class="figure-panel compact">
+          <img src="assets/images/world_model.png" alt="Intervention-aware world model diagram">
+          <figcaption>
+            The standard model-based heads support value learning; the new
+            intervention head supplies human-risk supervision.
+          </figcaption>
+        </figure>
+      </section>
+
+      <section id="results" class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Results</p>
+          <h2>Higher success with less operator control</h2>
+        </div>
+        <div class="results-grid">
+          <figure class="figure-panel">
+            <img src="assets/images/success_table.png" alt="Success-rate table for real robot tasks">
+            <figcaption>
+              WHIRL improves autonomous success across dexterous manipulation tasks.
+            </figcaption>
+          </figure>
+          <figure class="figure-panel">
+            <img src="assets/images/intervention_results.png" alt="Rolling intervention fraction across five tasks">
+            <figcaption>
+              Rolling intervention traces show lower operator-controlled fractions during online learning.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="videos" class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Real-world rollouts</p>
+          <h2>Five dexterous manipulation tasks</h2>
+        </div>
+        <div class="video-grid">
+          <article class="video-card">
+            <video src="assets/videos/pick_cube.mp4" controls muted playsinline preload="metadata"></video>
+            <h3>Pick Cube</h3>
+          </article>
+          <article class="video-card">
+            <video src="assets/videos/pick_lego.mp4" controls muted playsinline preload="metadata"></video>
+            <h3>Pick LEGO</h3>
+          </article>
+          <article class="video-card">
+            <video src="assets/videos/pick_place.mp4" controls muted playsinline preload="metadata"></video>
+            <h3>Pick &amp; Place</h3>
+          </article>
+          <article class="video-card">
+            <video src="assets/videos/pull_drawer.mp4" controls muted playsinline preload="metadata"></video>
+            <h3>Pull Drawer</h3>
+          </article>
+          <article class="video-card wide">
+            <video src="assets/videos/long_horizon.mp4" controls muted playsinline preload="metadata"></video>
+            <h3>Long Horizon</h3>
+          </article>
+        </div>
+      </section>
+
+      <section id="hardware" class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Hardware</p>
+          <h2>Tri-channel HIL teleoperation</h2>
+        </div>
+        <figure class="figure-panel">
+          <img src="assets/images/teleoperation.png" alt="SpaceMouse, Manus glove, and foot pedal teleoperation setup">
+          <figcaption>
+            SpaceMouse controls the arm, Manus glove controls the hand, and the
+            foot pedal toggles takeover.
+          </figcaption>
+        </figure>
+      </section>
+
+      <section id="citation" class="section narrow">
+        <h2>Citation</h2>
+        <pre><code>@article{whirl2026,
+  title   = {How to Learn from What a Human Would Avoid? Intervention-Aware World Models with Real-World RL for Dexterous Manipulation},
+  author  = {Anonymous Authors},
+  journal = {arXiv preprint},
+  year    = {2026}
+}</code></pre>
+      </section>
+    </main>
+
+    <footer>
+      <p>WHIRL project page. Links will be updated after arXiv and code release.</p>
+    </footer>
+  </body>
+</html>
