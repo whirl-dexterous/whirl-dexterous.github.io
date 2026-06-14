@@ -141,28 +141,20 @@
           <p class="eyebrow">Real-world rollouts</p>
           <h2>Five dexterous manipulation tasks</h2>
         </div>
-        <div class="video-grid">
-          <article class="video-card">
-            <video src="assets/videos/pick_cube.mp4" controls muted playsinline preload="metadata"></video>
-            <h3>Pick Cube</h3>
-          </article>
-          <article class="video-card">
-            <video src="assets/videos/pick_lego.mp4" controls muted playsinline preload="metadata"></video>
-            <h3>Pick LEGO</h3>
-          </article>
-          <article class="video-card">
-            <video src="assets/videos/pick_place.mp4" controls muted playsinline preload="metadata"></video>
-            <h3>Pick &amp; Place</h3>
-          </article>
-          <article class="video-card">
-            <video src="assets/videos/pull_drawer.mp4" controls muted playsinline preload="metadata"></video>
-            <h3>Pull Drawer</h3>
-          </article>
-          <article class="video-card wide">
-            <video src="assets/videos/long_horizon.mp4" controls muted playsinline preload="metadata"></video>
-            <h3>Long Horizon</h3>
-          </article>
+        <div class="task-switcher" role="group" aria-label="Select a task video">
+          <button class="task-button is-active" type="button" aria-pressed="true" data-title="Pick Cube" data-video="assets/videos/pick_cube.mp4" data-caption="Real-world rollout for the convex-object Pick Cube control task.">Pick Cube</button>
+          <button class="task-button" type="button" aria-pressed="false" data-title="Pick LEGO" data-video="assets/videos/pick_lego.mp4" data-caption="Real-world rollout for dexterous grasping on the Pick LEGO task.">Pick LEGO</button>
+          <button class="task-button" type="button" aria-pressed="false" data-title="Pick &amp; Place" data-video="assets/videos/pick_place.mp4" data-caption="Real-world rollout for pick-and-place with object transfer.">Pick &amp; Place</button>
+          <button class="task-button" type="button" aria-pressed="false" data-title="Pull Drawer" data-video="assets/videos/pull_drawer.mp4" data-caption="Real-world rollout for drawer-handle manipulation.">Pull Drawer</button>
+          <button class="task-button" type="button" aria-pressed="false" data-title="Long Horizon" data-video="assets/videos/long_horizon.mp4" data-caption="Real-world rollout for the long-horizon drawer-place-close sequence.">Long Horizon</button>
         </div>
+        <article class="task-viewer">
+          <video id="task-video" src="assets/videos/pick_cube.mp4" controls muted playsinline preload="metadata"></video>
+          <div class="task-meta">
+            <h3 id="task-title">Pick Cube</h3>
+            <p id="task-caption">Real-world rollout for the convex-object Pick Cube control task.</p>
+          </div>
+        </article>
       </section>
 
       <section id="hardware" class="section">
@@ -193,5 +185,32 @@
     <footer>
       <p>WHIRL project page. Links will be updated after arXiv and code release.</p>
     </footer>
+    <script>
+      const taskButtons = document.querySelectorAll(".task-button");
+      const taskVideo = document.querySelector("#task-video");
+      const taskTitle = document.querySelector("#task-title");
+      const taskCaption = document.querySelector("#task-caption");
+
+      taskButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          if (button.classList.contains("is-active")) {
+            return;
+          }
+
+          taskButtons.forEach((item) => {
+            item.classList.remove("is-active");
+            item.setAttribute("aria-pressed", "false");
+          });
+
+          button.classList.add("is-active");
+          button.setAttribute("aria-pressed", "true");
+          taskVideo.pause();
+          taskVideo.src = button.dataset.video;
+          taskVideo.load();
+          taskTitle.textContent = button.dataset.title;
+          taskCaption.textContent = button.dataset.caption;
+        });
+      });
+    </script>
   </body>
 </html>
