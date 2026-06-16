@@ -11,9 +11,8 @@
     <header class="site-header">
       <a class="brand" href="#top">WHIRL</a>
       <nav aria-label="Project sections">
-        <a href="#method">Method</a>
-        <a href="#results">Results</a>
         <a href="#videos">Videos</a>
+        <a href="#conclusion">Conclusion</a>
         <a href="#citation">Citation</a>
       </nav>
     </header>
@@ -21,8 +20,19 @@
     <main id="top">
       <section class="hero">
         <div class="hero-copy">
-          <p class="venue">CoRL 2026 submission</p>
+          <p class="venue">CoRL 2026</p>
           <h1>How to Learn from What a Human Would Avoid?</h1>
+          <p class="title-tail">
+            Intervention-Aware World Models with Real-World RL for Dexterous Manipulation
+          </p>
+          <p class="authors">
+            Jiaju Yin<sup>1,*</sup>, Zhenhui Zhang<sup>1,*</sup>, Lixin Xu<sup>1</sup>, Heng Zhang<sup>2</sup>,
+            Jun Shao<sup>3</sup>, Yating Feng<sup>1</sup>, Arash Ajoudani<sup>2,&dagger;</sup>, Renjing Xu<sup>1,&dagger;</sup>
+          </p>
+          <p class="affiliations">
+            <sup>1</sup>HKUST (Guangzhou) &nbsp; <sup>2</sup>Italian Institute of Technology &nbsp; <sup>3</sup>Zhejiang University
+          </p>
+          <p class="notes"><sup>*</sup>Equal contribution &nbsp; <sup>&dagger;</sup>Corresponding author</p>
           <p class="subtitle">
             WHIRL turns human takeovers into predictive intervention signals for
             real-world residual RL with a 16-DoF dexterous hand.
@@ -39,117 +49,20 @@
         </figure>
       </section>
 
-      <section class="summary">
-        <div>
-          <span class="metric">4-head WM</span>
-          <p>Dynamics, reward, and termination support the critic; an intervention head shapes the actor.</p>
-        </div>
-        <div>
-          <span class="metric">5 tasks</span>
-          <p>Pick Cube, Pick LEGO, Pick &amp; Place, Pull Drawer, and a long-horizon drawer-place-close task.</p>
-        </div>
-        <div>
-          <span class="metric">Real robot</span>
-          <p>Franka FR3 arm, 16-DoF LEAP Hand, dual RGB cameras, Manus glove, SpaceMouse, and pedal takeover.</p>
-        </div>
-      </section>
-
-      <section id="abstract" class="section narrow">
-        <h2>Abstract</h2>
-        <p>
-          Multi-fingered dexterous manipulation remains difficult for online RL
-          because exploratory failures are expensive on hardware. Human-in-the-loop
-          RL can prevent catastrophic failures, but existing systems often treat
-          takeovers as one-step corrections. WHIRL instead learns from what the
-          human would avoid: each pedal intervention supervises an
-          intervention-aware world model whose takeover-probability head predicts
-          states likely to require help, then shapes the residual actor away from
-          those regions.
-        </p>
-      </section>
-
-      <section id="method" class="section">
-        <div class="section-heading">
-          <p class="eyebrow">Method</p>
-          <h2>Takeovers become predictive risk</h2>
-        </div>
-        <figure class="figure-panel">
-          <img src="assets/images/overview.png" alt="WHIRL system overview">
-          <figcaption>
-            WHIRL combines mid-rollout HIL teleoperation, residual RL on top of a
-            behavior prior, and an intervention-aware world model.
-          </figcaption>
-        </figure>
-        <div class="method-grid">
-          <article>
-            <h3>HIL labels</h3>
-            <p>
-              A foot pedal switches between autonomous execution and human
-              teleoperation. The pedal state labels each transition with whether
-              the operator took over.
-            </p>
-          </article>
-          <article>
-            <h3>Critic path</h3>
-            <p>
-              Dynamics, reward, and termination heads produce a short-horizon
-              model-based target, gated by ensemble uncertainty before it enters
-              the critic loss.
-            </p>
-          </article>
-          <article>
-            <h3>Actor path</h3>
-            <p>
-              The intervention head predicts future takeover probability and
-              shapes the actor toward states that are less likely to require
-              human control.
-            </p>
-          </article>
-        </div>
-        <figure class="figure-panel compact">
-          <img src="assets/images/world_model.png" alt="Intervention-aware world model diagram">
-          <figcaption>
-            The standard model-based heads support value learning; the new
-            intervention head supplies human-risk supervision.
-          </figcaption>
-        </figure>
-      </section>
-
-      <section id="results" class="section">
-        <div class="section-heading">
-          <p class="eyebrow">Results</p>
-          <h2>Higher success with less operator control</h2>
-        </div>
-        <div class="results-grid">
-          <figure class="figure-panel">
-            <img src="assets/images/success_table.png" alt="Success-rate table for real robot tasks">
-            <figcaption>
-              WHIRL improves autonomous success across dexterous manipulation tasks.
-            </figcaption>
-          </figure>
-          <figure class="figure-panel">
-            <img src="assets/images/intervention_results.png" alt="Rolling intervention fraction across five tasks">
-            <figcaption>
-              Rolling intervention traces show lower operator-controlled fractions during online learning.
-            </figcaption>
-          </figure>
-        </div>
-      </section>
-
       <section id="videos" class="section">
         <div class="section-heading">
           <p class="eyebrow">Real-world rollouts</p>
           <h2>Five dexterous manipulation tasks</h2>
         </div>
         <div class="task-switcher" role="group" aria-label="Select a task video">
-          <button class="task-button is-active" type="button" aria-pressed="true" data-title="Pick Cube" data-video="assets/videos/pick_cube.mp4" data-caption="Real-world rollout for the convex-object Pick Cube control task.">Pick Cube</button>
-          <button class="task-button" type="button" aria-pressed="false" data-title="Pick LEGO" data-video="assets/videos/pick_lego.mp4" data-caption="Real-world rollout for dexterous grasping on the Pick LEGO task.">Pick LEGO</button>
-          <button class="task-button" type="button" aria-pressed="false" data-title="Pick &amp; Place" data-video="assets/videos/pick_place.mp4" data-caption="Real-world rollout for pick-and-place with object transfer.">Pick &amp; Place</button>
-          <button class="task-button" type="button" aria-pressed="false" data-title="Pull Drawer" data-video="assets/videos/pull_drawer.mp4" data-caption="Real-world rollout for drawer-handle manipulation.">Pull Drawer</button>
-          <button class="task-button" type="button" aria-pressed="false" data-title="Long Horizon" data-video="assets/videos/long_horizon.mp4" data-caption="Real-world rollout for the long-horizon drawer-place-close sequence.">Long Horizon</button>
+          <button class="task-button is-active" type="button" aria-pressed="true" data-title="Pick Cube" data-video="assets/videos/pick_cube.mp4" data-poster="assets/posters/pick_cube.jpg" data-caption="Real-world rollout for the convex-object Pick Cube control task.">Pick Cube</button>
+          <button class="task-button" type="button" aria-pressed="false" data-title="Pick LEGO" data-video="assets/videos/pick_lego.mp4" data-poster="assets/posters/pick_lego.jpg" data-caption="Real-world rollout for dexterous grasping on the Pick LEGO task.">Pick LEGO</button>
+          <button class="task-button" type="button" aria-pressed="false" data-title="Pick &amp; Place" data-video="assets/videos/pick_place.mp4" data-poster="assets/posters/pick_place.jpg" data-caption="Real-world rollout for pick-and-place with object transfer.">Pick &amp; Place</button>
+          <button class="task-button" type="button" aria-pressed="false" data-title="Pull Drawer" data-video="assets/videos/pull_drawer.mp4" data-poster="assets/posters/pull_drawer.jpg" data-caption="Real-world rollout for drawer-handle manipulation.">Pull Drawer</button>
+          <button class="task-button" type="button" aria-pressed="false" data-title="Long Horizon" data-video="assets/videos/long_horizon.mp4" data-poster="assets/posters/long_horizon.jpg" data-caption="Real-world rollout for the long-horizon drawer-place-close sequence.">Long Horizon</button>
         </div>
         <article class="task-viewer">
-          <video id="task-video" src="assets/videos/pick_cube.mp4" controls muted playsinline preload="metadata"></video>
+          <video id="task-video" src="assets/videos/pick_cube.mp4" poster="assets/posters/pick_cube.jpg" controls muted playsinline preload="metadata"></video>
           <div class="task-meta">
             <h3 id="task-title">Pick Cube</h3>
             <p id="task-caption">Real-world rollout for the convex-object Pick Cube control task.</p>
@@ -157,25 +70,24 @@
         </article>
       </section>
 
-      <section id="hardware" class="section">
-        <div class="section-heading">
-          <p class="eyebrow">Hardware</p>
-          <h2>Tri-channel HIL teleoperation</h2>
-        </div>
-        <figure class="figure-panel">
-          <img src="assets/images/teleoperation.png" alt="SpaceMouse, Manus glove, and foot pedal teleoperation setup">
-          <figcaption>
-            SpaceMouse controls the arm, Manus glove controls the hand, and the
-            foot pedal toggles takeover.
-          </figcaption>
-        </figure>
+      <section id="conclusion" class="section narrow">
+        <p class="eyebrow">Conclusion</p>
+        <h2>Human takeovers become reusable risk predictions</h2>
+        <p>
+          WHIRL uses pedal interventions as forward supervision for an intervention-aware
+          world model. The standard dynamics, reward, and termination heads support the
+          critic, while the intervention head shapes the actor away from states that are
+          likely to need human control. Across five real-world dexterous manipulation
+          tasks, this reduces operator-controlled training steps while improving autonomous
+          success.
+        </p>
       </section>
 
       <section id="citation" class="section narrow">
         <h2>Citation</h2>
         <pre><code>@article{whirl2026,
   title   = {How to Learn from What a Human Would Avoid? Intervention-Aware World Models with Real-World RL for Dexterous Manipulation},
-  author  = {Anonymous Authors},
+  author  = {Yin, Jiaju and Zhang, Zhenhui and Xu, Lixin and Zhang, Heng and Shao, Jun and Feng, Yating and Ajoudani, Arash and Xu, Renjing},
   journal = {arXiv preprint},
   year    = {2026}
 }</code></pre>
@@ -206,6 +118,7 @@
           button.setAttribute("aria-pressed", "true");
           taskVideo.pause();
           taskVideo.src = button.dataset.video;
+          taskVideo.poster = button.dataset.poster;
           taskVideo.load();
           taskTitle.textContent = button.dataset.title;
           taskCaption.textContent = button.dataset.caption;
