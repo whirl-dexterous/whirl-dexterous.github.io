@@ -138,6 +138,10 @@ h1 {
   line-height: 1.45;
 }
 
+.authors span {
+  display: block;
+}
+
 .affiliations,
 .notes {
   display: flex;
@@ -479,9 +483,13 @@ footer p {
   }
 
   .authors {
-    max-width: 295px;
-    font-size: 12px;
+    max-width: 340px;
+    font-size: 10.5px;
     line-height: 1.35;
+  }
+
+  .authors span {
+    display: block;
   }
 
   .affiliations,
