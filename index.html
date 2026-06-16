@@ -11,6 +11,7 @@
     <header class="site-header">
       <a class="brand" href="#top">WHIRL</a>
       <nav aria-label="Project sections">
+        <a href="#method">Method</a>
         <a href="#videos">Videos</a>
         <a href="#conclusion">Conclusion</a>
         <a href="#citation">Citation</a>
@@ -30,9 +31,14 @@
             Jun Shao<sup>3</sup>, Yating Feng<sup>1</sup>, Arash Ajoudani<sup>2,&dagger;</sup>, Renjing Xu<sup>1,&dagger;</sup>
           </p>
           <p class="affiliations">
-            <sup>1</sup>HKUST (Guangzhou) &nbsp; <sup>2</sup>Italian Institute of Technology &nbsp; <sup>3</sup>Zhejiang University
+            <span><sup>1</sup>HKUST (Guangzhou)</span>
+            <span><sup>2</sup>Italian Institute of Technology</span>
+            <span><sup>3</sup>Zhejiang University</span>
           </p>
-          <p class="notes"><sup>*</sup>Equal contribution &nbsp; <sup>&dagger;</sup>Corresponding author</p>
+          <p class="notes">
+            <span><sup>*</sup>Equal contribution</span>
+            <span><sup>&dagger;</sup>Corresponding author</span>
+          </p>
           <p class="subtitle">
             WHIRL turns human takeovers into predictive intervention signals for
             real-world residual RL with a 16-DoF dexterous hand.
@@ -49,6 +55,47 @@
         </figure>
       </section>
 
+      <section id="method" class="section method-section">
+        <div class="section-heading">
+          <p class="eyebrow">Method</p>
+          <h2>Intervention-aware residual RL</h2>
+          <p>
+            WHIRL treats each human takeover as supervision about states the operator would avoid,
+            then uses that signal to train a residual policy more proactively.
+          </p>
+        </div>
+        <div class="method-stack">
+          <article class="method-item">
+            <figure>
+              <img src="assets/images/overview.png" alt="WHIRL main pipeline from teleoperation and interventions to residual reinforcement learning">
+            </figure>
+            <div class="method-copy">
+              <h3>Main pipeline</h3>
+              <p>
+                A behavior prior is first learned from teleoperated demonstrations. During real-world
+                RL, the residual policy acts by default, while operator takeovers provide binary
+                intervention labels that are reused as training signal instead of being discarded as
+                only online corrections.
+              </p>
+            </div>
+          </article>
+          <article class="method-item">
+            <figure>
+              <img src="assets/images/world_model.png" alt="Intervention-aware latent world model with dynamics, reward, termination, and intervention heads">
+            </figure>
+            <div class="method-copy">
+              <h3>Intervention-aware world model</h3>
+              <p>
+                The latent world model keeps standard dynamics, reward, and termination heads for
+                critic learning, and adds an intervention-probability head. That prediction becomes
+                an actor-side risk-shaping term, steering the policy away from intervention-prone
+                states before the human needs to take over.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
       <section id="videos" class="section">
         <div class="section-heading">
           <p class="eyebrow">Real-world rollouts</p>
@@ -62,7 +109,7 @@
           <button class="task-button" type="button" aria-pressed="false" data-title="Long Horizon" data-video="assets/videos/long_horizon.mp4" data-poster="assets/posters/long_horizon.jpg" data-caption="Real-world rollout for the long-horizon drawer-place-close sequence.">Long Horizon</button>
         </div>
         <article class="task-viewer">
-          <video id="task-video" src="assets/videos/pick_cube.mp4" poster="assets/posters/pick_cube.jpg" controls muted playsinline preload="metadata"></video>
+          <video id="task-video" src="assets/videos/pick_cube.mp4" poster="assets/posters/pick_cube.jpg" controls autoplay loop muted playsinline preload="auto"></video>
           <div class="task-meta">
             <h3 id="task-title">Pick Cube</h3>
             <p id="task-caption">Real-world rollout for the convex-object Pick Cube control task.</p>
@@ -120,6 +167,7 @@
           taskVideo.src = button.dataset.video;
           taskVideo.poster = button.dataset.poster;
           taskVideo.load();
+          taskVideo.play().catch(() => {});
           taskTitle.textContent = button.dataset.title;
           taskCaption.textContent = button.dataset.caption;
         });
