@@ -78,14 +78,14 @@ main {
   flex-direction: column;
   gap: 26px;
   align-items: center;
-  max-width: 1180px;
+  max-width: 1320px;
   margin: 0 auto;
   padding: 34px 24px 32px;
 }
 
 .hero-copy {
   min-width: 0;
-  max-width: 980px;
+  max-width: 1240px;
   width: 100%;
   padding-top: 0;
   text-align: center;
@@ -110,23 +110,25 @@ p {
 }
 
 h1 {
-  max-width: 980px;
+  max-width: 1240px;
   margin: 0;
-  font-size: clamp(36px, 4.7vw, 62px);
+  font-size: clamp(32px, 3.45vw, 50px);
   font-weight: 760;
   line-height: 1.05;
   letter-spacing: 0;
   text-wrap: balance;
+  white-space: nowrap;
 }
 
 .title-tail {
-  max-width: 920px;
+  max-width: 1240px;
   margin: 18px auto 0;
   color: #232b35;
-  font-size: clamp(21px, 2.45vw, 29px);
+  font-size: clamp(20px, 2.1vw, 27px);
   font-weight: 680;
   line-height: 1.22;
   text-wrap: balance;
+  white-space: nowrap;
 }
 
 .authors {
@@ -136,6 +138,10 @@ h1 {
   font-size: 16px;
   font-weight: 620;
   line-height: 1.45;
+}
+
+.authors span {
+  display: inline;
 }
 
 .affiliations,
@@ -202,6 +208,7 @@ h1 {
 .hero-media {
   width: 100%;
   min-width: 0;
+  max-width: 1180px;
   margin: 0;
   padding-top: 0;
 }
@@ -406,6 +413,11 @@ footer p {
     padding-top: 30px;
   }
 
+  h1,
+  .title-tail {
+    white-space: normal;
+  }
+
   .method-item {
     grid-template-columns: 1fr;
   }
@@ -479,9 +491,13 @@ footer p {
   }
 
   .authors {
-    max-width: 340px;
+    max-width: 320px;
     font-size: 10.5px;
     line-height: 1.35;
+  }
+
+  .authors span {
+    display: block;
   }
 
   .affiliations,
