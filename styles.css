@@ -130,16 +130,12 @@ h1 {
 }
 
 .authors {
-  max-width: 920px;
+  max-width: 1040px;
   margin: 22px auto 0;
   color: #232b35;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 620;
   line-height: 1.45;
-}
-
-.authors span {
-  display: block;
 }
 
 .affiliations,
@@ -486,10 +482,6 @@ footer p {
     max-width: 340px;
     font-size: 10.5px;
     line-height: 1.35;
-  }
-
-  .authors span {
-    display: block;
   }
 
   .affiliations,
