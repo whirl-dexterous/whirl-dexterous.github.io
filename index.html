@@ -101,35 +101,50 @@
         </div>
         <div class="task-group" aria-labelledby="short-horizon-heading">
           <h3 id="short-horizon-heading" class="task-group-title">Short-horizon tasks</h3>
-          <div class="task-grid task-grid-short">
-            <article class="task-card">
-              <video src="assets/videos/pick_cube.mp4" poster="assets/posters/pick_cube.jpg" aria-label="Pick Cube real-world rollout" controls autoplay loop muted playsinline preload="metadata"></video>
-              <div class="task-meta">
-                <h4>Pick Cube</h4>
-                <p>Real-world rollout for the convex-object Pick Cube control task.</p>
-              </div>
-            </article>
-            <article class="task-card">
-              <video src="assets/videos/pick_lego.mp4" poster="assets/posters/pick_lego.jpg" aria-label="Pick LEGO real-world rollout" controls autoplay loop muted playsinline preload="metadata"></video>
-              <div class="task-meta">
-                <h4>Pick LEGO</h4>
-                <p>Real-world rollout for dexterous grasping on the Pick LEGO task.</p>
-              </div>
-            </article>
-            <article class="task-card">
-              <video src="assets/videos/pick_place.mp4" poster="assets/posters/pick_place.jpg" aria-label="Pick and Place real-world rollout" controls autoplay loop muted playsinline preload="metadata"></video>
-              <div class="task-meta">
-                <h4>Pick &amp; Place</h4>
-                <p>Real-world rollout for pick-and-place with object transfer.</p>
-              </div>
-            </article>
-            <article class="task-card">
-              <video src="assets/videos/pull_drawer.mp4" poster="assets/posters/pull_drawer.jpg" aria-label="Pull Drawer real-world rollout" controls autoplay loop muted playsinline preload="metadata"></video>
-              <div class="task-meta">
-                <h4>Pull Drawer</h4>
-                <p>Real-world rollout for drawer-handle manipulation.</p>
-              </div>
-            </article>
+          <div class="task-carousel" role="region" aria-roledescription="carousel" aria-label="Short-horizon task videos" tabindex="0">
+            <div class="task-carousel-stage">
+              <article class="task-card carousel-card is-active" data-task-title="Pick Cube" aria-hidden="false">
+                <video src="assets/videos/pick_cube.mp4" poster="assets/posters/pick_cube.jpg" aria-label="Pick Cube real-world rollout" controls autoplay loop muted playsinline preload="metadata"></video>
+                <div class="task-meta">
+                  <h4>Pick Cube</h4>
+                  <p>Real-world rollout for the convex-object Pick Cube control task.</p>
+                </div>
+              </article>
+              <article class="task-card carousel-card is-next" data-task-title="Pick LEGO" aria-hidden="true">
+                <video src="assets/videos/pick_lego.mp4" poster="assets/posters/pick_lego.jpg" aria-label="Pick LEGO real-world rollout" controls loop muted playsinline preload="metadata" tabindex="-1"></video>
+                <div class="task-meta">
+                  <h4>Pick LEGO</h4>
+                  <p>Real-world rollout for dexterous grasping on the Pick LEGO task.</p>
+                </div>
+              </article>
+              <article class="task-card carousel-card is-hidden" data-task-title="Pick &amp; Place" aria-hidden="true">
+                <video src="assets/videos/pick_place.mp4" poster="assets/posters/pick_place.jpg" aria-label="Pick and Place real-world rollout" controls loop muted playsinline preload="metadata" tabindex="-1"></video>
+                <div class="task-meta">
+                  <h4>Pick &amp; Place</h4>
+                  <p>Real-world rollout for pick-and-place with object transfer.</p>
+                </div>
+              </article>
+              <article class="task-card carousel-card is-prev" data-task-title="Pull Drawer" aria-hidden="true">
+                <video src="assets/videos/pull_drawer.mp4" poster="assets/posters/pull_drawer.jpg" aria-label="Pull Drawer real-world rollout" controls loop muted playsinline preload="metadata" tabindex="-1"></video>
+                <div class="task-meta">
+                  <h4>Pull Drawer</h4>
+                  <p>Real-world rollout for drawer-handle manipulation.</p>
+                </div>
+              </article>
+            </div>
+            <button class="carousel-arrow carousel-arrow-prev" type="button" aria-label="Show previous short-horizon task">
+              <span aria-hidden="true">&larr;</span>
+            </button>
+            <button class="carousel-arrow carousel-arrow-next" type="button" aria-label="Show next short-horizon task">
+              <span aria-hidden="true">&rarr;</span>
+            </button>
+            <div class="carousel-pagination" aria-label="Choose a short-horizon task">
+              <button class="carousel-dot is-active" type="button" data-slide="0" aria-label="Show Pick Cube video" aria-current="true"></button>
+              <button class="carousel-dot" type="button" data-slide="1" aria-label="Show Pick LEGO video"></button>
+              <button class="carousel-dot" type="button" data-slide="2" aria-label="Show Pick and Place video"></button>
+              <button class="carousel-dot" type="button" data-slide="3" aria-label="Show Pull Drawer video"></button>
+            </div>
+            <p class="sr-only" id="carousel-status" aria-live="polite">Showing Pick Cube, video 1 of 4.</p>
           </div>
         </div>
         <div class="task-group task-group-long" aria-labelledby="long-horizon-heading">
@@ -173,5 +188,87 @@
     <footer>
       <p>WHIRL project page. Links will be updated after arXiv and code release.</p>
     </footer>
+    <script>
+      const shortHorizonCarousel = document.querySelector(".task-carousel");
+
+      if (shortHorizonCarousel) {
+        const carouselCards = [...shortHorizonCarousel.querySelectorAll(".carousel-card")];
+        const carouselDots = [...shortHorizonCarousel.querySelectorAll(".carousel-dot")];
+        const previousButton = shortHorizonCarousel.querySelector(".carousel-arrow-prev");
+        const nextButton = shortHorizonCarousel.querySelector(".carousel-arrow-next");
+        const carouselStatus = shortHorizonCarousel.querySelector("#carousel-status");
+        let activeIndex = 0;
+
+        const showTask = (nextIndex) => {
+          activeIndex = (nextIndex + carouselCards.length) % carouselCards.length;
+
+          carouselCards.forEach((card, index) => {
+            const relativeIndex = (index - activeIndex + carouselCards.length) % carouselCards.length;
+            const isActive = index === activeIndex;
+            const video = card.querySelector("video");
+
+            card.classList.toggle("is-active", isActive);
+            card.classList.toggle("is-next", relativeIndex === 1);
+            card.classList.toggle("is-prev", relativeIndex === carouselCards.length - 1);
+            card.classList.toggle("is-hidden", relativeIndex > 1 && relativeIndex < carouselCards.length - 1);
+            card.setAttribute("aria-hidden", String(!isActive));
+            video.tabIndex = isActive ? 0 : -1;
+
+            if (isActive) {
+              try {
+                video.currentTime = 0;
+              } catch (error) {
+                // Some browsers cannot seek until video metadata is available.
+              }
+              video.play().catch(() => {});
+            } else {
+              video.pause();
+            }
+          });
+
+          carouselDots.forEach((dot, index) => {
+            const isActive = index === activeIndex;
+            dot.classList.toggle("is-active", isActive);
+            if (isActive) {
+              dot.setAttribute("aria-current", "true");
+            } else {
+              dot.removeAttribute("aria-current");
+            }
+          });
+
+          const activeTitle = carouselCards[activeIndex].dataset.taskTitle;
+          carouselStatus.textContent = `Showing ${activeTitle}, video ${activeIndex + 1} of ${carouselCards.length}.`;
+        };
+
+        previousButton.addEventListener("click", () => showTask(activeIndex - 1));
+        nextButton.addEventListener("click", () => showTask(activeIndex + 1));
+
+        carouselCards.forEach((card, index) => {
+          card.addEventListener("click", () => {
+            if (index !== activeIndex) {
+              showTask(index);
+            }
+          });
+        });
+
+        carouselDots.forEach((dot, index) => {
+          dot.addEventListener("click", () => showTask(index));
+        });
+
+        shortHorizonCarousel.addEventListener("keydown", (event) => {
+          if (event.target !== shortHorizonCarousel) {
+            return;
+          }
+
+          if (event.key === "ArrowLeft") {
+            event.preventDefault();
+            showTask(activeIndex - 1);
+          } else if (event.key === "ArrowRight") {
+            event.preventDefault();
+            showTask(activeIndex + 1);
+          }
+        });
+      }
+    </script>
   </body>
 </html>
