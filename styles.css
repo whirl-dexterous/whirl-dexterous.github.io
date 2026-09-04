@@ -313,46 +313,32 @@ h3 {
   line-height: 1.58;
 }
 
-.task-switcher {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 16px;
+.task-group + .task-group {
+  margin-top: 38px;
 }
 
-.task-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 40px;
-  padding: 0 15px;
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  background: #fff;
+.task-group-title {
+  margin-bottom: 14px;
   color: #303945;
-  font: inherit;
-  font-size: 14px;
-  font-weight: 680;
-  line-height: 1;
-  white-space: nowrap;
-  cursor: pointer;
+  font-size: 20px;
 }
 
-.task-button:hover,
-.task-button:focus-visible {
-  border-color: var(--accent);
-  color: var(--accent-strong);
+.task-grid {
+  display: grid;
+  gap: 16px;
 }
 
-.task-button.is-active {
-  border-color: var(--accent);
-  background: var(--accent);
-  color: #fff;
+.task-grid-short {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
-.task-viewer {
-  max-width: 620px;
-  margin: 0 auto;
+.task-grid-long {
+  grid-template-columns: minmax(0, 620px);
+  justify-content: center;
+}
+
+.task-card {
+  min-width: 0;
   overflow: hidden;
   background: var(--panel);
   border: 1px solid var(--line);
@@ -360,10 +346,9 @@ h3 {
   box-shadow: 0 10px 30px rgba(25, 34, 44, 0.07);
 }
 
-.task-viewer video {
+.task-card video {
   display: block;
   width: 100%;
-  max-height: min(76vh, 980px);
   aspect-ratio: 9 / 16;
   background: #111;
   object-fit: contain;
@@ -373,9 +358,10 @@ h3 {
   padding: 16px 18px 18px;
 }
 
-.task-meta h3 {
+.task-meta h4 {
   margin: 0 0 6px;
   font-size: 18px;
+  line-height: 1.25;
 }
 
 .task-meta p {
@@ -422,10 +408,8 @@ footer p {
     grid-template-columns: 1fr;
   }
 
-  .task-switcher {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    padding-bottom: 4px;
+  .task-grid-short {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -474,7 +458,8 @@ footer p {
   .section-heading,
   .method-stack,
   .method-item,
-  .task-viewer {
+  .task-grid,
+  .task-card {
     width: 100%;
     max-width: 100%;
     min-width: 0;
@@ -555,7 +540,15 @@ footer p {
     font-size: 15px;
   }
 
-  .task-button {
-    flex: 0 0 auto;
+  .task-grid-short {
+    grid-template-columns: 1fr;
+  }
+
+  .task-group + .task-group {
+    margin-top: 32px;
+  }
+
+  .task-group-title {
+    font-size: 19px;
   }
 }

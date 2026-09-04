@@ -99,20 +99,51 @@
           <p class="eyebrow">Real-world rollouts</p>
           <h2>Five dexterous manipulation tasks</h2>
         </div>
-        <div class="task-switcher" role="group" aria-label="Select a task video">
-          <button class="task-button is-active" type="button" aria-pressed="true" data-title="Pick Cube" data-video="assets/videos/pick_cube.mp4" data-poster="assets/posters/pick_cube.jpg" data-caption="Real-world rollout for the convex-object Pick Cube control task.">Pick Cube</button>
-          <button class="task-button" type="button" aria-pressed="false" data-title="Pick LEGO" data-video="assets/videos/pick_lego.mp4" data-poster="assets/posters/pick_lego.jpg" data-caption="Real-world rollout for dexterous grasping on the Pick LEGO task.">Pick LEGO</button>
-          <button class="task-button" type="button" aria-pressed="false" data-title="Pick &amp; Place" data-video="assets/videos/pick_place.mp4" data-poster="assets/posters/pick_place.jpg" data-caption="Real-world rollout for pick-and-place with object transfer.">Pick &amp; Place</button>
-          <button class="task-button" type="button" aria-pressed="false" data-title="Pull Drawer" data-video="assets/videos/pull_drawer.mp4" data-poster="assets/posters/pull_drawer.jpg" data-caption="Real-world rollout for drawer-handle manipulation.">Pull Drawer</button>
-          <button class="task-button" type="button" aria-pressed="false" data-title="Long Horizon" data-video="assets/videos/long_horizon.mp4" data-poster="assets/posters/long_horizon.jpg" data-caption="Real-world rollout for the long-horizon drawer-place-close sequence.">Long Horizon</button>
-        </div>
-        <article class="task-viewer">
-          <video id="task-video" src="assets/videos/pick_cube.mp4" poster="assets/posters/pick_cube.jpg" controls autoplay loop muted playsinline preload="auto"></video>
-          <div class="task-meta">
-            <h3 id="task-title">Pick Cube</h3>
-            <p id="task-caption">Real-world rollout for the convex-object Pick Cube control task.</p>
+        <div class="task-group" aria-labelledby="short-horizon-heading">
+          <h3 id="short-horizon-heading" class="task-group-title">Short-horizon tasks</h3>
+          <div class="task-grid task-grid-short">
+            <article class="task-card">
+              <video src="assets/videos/pick_cube.mp4" poster="assets/posters/pick_cube.jpg" aria-label="Pick Cube real-world rollout" controls autoplay loop muted playsinline preload="metadata"></video>
+              <div class="task-meta">
+                <h4>Pick Cube</h4>
+                <p>Real-world rollout for the convex-object Pick Cube control task.</p>
+              </div>
+            </article>
+            <article class="task-card">
+              <video src="assets/videos/pick_lego.mp4" poster="assets/posters/pick_lego.jpg" aria-label="Pick LEGO real-world rollout" controls autoplay loop muted playsinline preload="metadata"></video>
+              <div class="task-meta">
+                <h4>Pick LEGO</h4>
+                <p>Real-world rollout for dexterous grasping on the Pick LEGO task.</p>
+              </div>
+            </article>
+            <article class="task-card">
+              <video src="assets/videos/pick_place.mp4" poster="assets/posters/pick_place.jpg" aria-label="Pick and Place real-world rollout" controls autoplay loop muted playsinline preload="metadata"></video>
+              <div class="task-meta">
+                <h4>Pick &amp; Place</h4>
+                <p>Real-world rollout for pick-and-place with object transfer.</p>
+              </div>
+            </article>
+            <article class="task-card">
+              <video src="assets/videos/pull_drawer.mp4" poster="assets/posters/pull_drawer.jpg" aria-label="Pull Drawer real-world rollout" controls autoplay loop muted playsinline preload="metadata"></video>
+              <div class="task-meta">
+                <h4>Pull Drawer</h4>
+                <p>Real-world rollout for drawer-handle manipulation.</p>
+              </div>
+            </article>
           </div>
-        </article>
+        </div>
+        <div class="task-group task-group-long" aria-labelledby="long-horizon-heading">
+          <h3 id="long-horizon-heading" class="task-group-title">Long-horizon task</h3>
+          <div class="task-grid task-grid-long">
+            <article class="task-card">
+              <video src="assets/videos/long_horizon.mp4" poster="assets/posters/long_horizon.jpg" aria-label="Long-horizon real-world rollout" controls autoplay loop muted playsinline preload="metadata"></video>
+              <div class="task-meta">
+                <h4>Long Horizon</h4>
+                <p>Real-world rollout for the long-horizon drawer-place-close sequence.</p>
+              </div>
+            </article>
+          </div>
+        </div>
       </section>
 
       <section id="conclusion" class="section narrow">
@@ -142,34 +173,5 @@
     <footer>
       <p>WHIRL project page. Links will be updated after arXiv and code release.</p>
     </footer>
-    <script>
-      const taskButtons = document.querySelectorAll(".task-button");
-      const taskVideo = document.querySelector("#task-video");
-      const taskTitle = document.querySelector("#task-title");
-      const taskCaption = document.querySelector("#task-caption");
-
-      taskButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-          if (button.classList.contains("is-active")) {
-            return;
-          }
-
-          taskButtons.forEach((item) => {
-            item.classList.remove("is-active");
-            item.setAttribute("aria-pressed", "false");
-          });
-
-          button.classList.add("is-active");
-          button.setAttribute("aria-pressed", "true");
-          taskVideo.pause();
-          taskVideo.src = button.dataset.video;
-          taskVideo.poster = button.dataset.poster;
-          taskVideo.load();
-          taskVideo.play().catch(() => {});
-          taskTitle.textContent = button.dataset.title;
-          taskCaption.textContent = button.dataset.caption;
-        });
-      });
-    </script>
   </body>
 </html>
