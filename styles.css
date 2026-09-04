@@ -486,9 +486,11 @@ h3 {
 .task-card video {
   display: block;
   width: 100%;
-  aspect-ratio: 9 / 16;
+  /* 9:16 source with 10% cropped from the top and 20% from the bottom. */
+  aspect-ratio: 45 / 56;
   background: #111;
-  object-fit: contain;
+  object-fit: cover;
+  object-position: center 33.333%;
 }
 
 .task-meta {
